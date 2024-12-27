@@ -1,3 +1,23 @@
-<div>
-    <h3>{{name() === 'none'? '' : name()}}</h3>
-</div>
+@if(newTaskTab) 
+{
+    <app-new-task (cancel)="toggleAddTaskTab()" (add)="onNewTaskSubmit($event)"></app-new-task>
+}
+<section id="tasks">
+    <header>
+        <h2>{{name()}}'s Tasks</h2>
+        <menu>
+            <button (click)="toggleAddTaskTab()">
+                Add Task
+            </button>
+        </menu>
+    </header>
+
+    <ul>
+        @for (task of SelectedUserTasks; track task.id)
+        {
+            <li>
+                <app-task [task] = "task" (complete)="onCompleteTask($event)"/>
+            </li>
+        }
+    </ul>
+</section>
