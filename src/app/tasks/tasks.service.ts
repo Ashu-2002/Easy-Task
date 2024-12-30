@@ -27,7 +27,19 @@ export class TasksService {
           'Prepare and describe an issue template which will help with project management',
         dueDate: '2024-06-15',
       },
-    ] 
+    ]; 
+
+    constructor(){
+      const tasks = localStorage.getItem('tasks');
+
+      if(tasks){
+        this.tasks = JSON.parse(tasks);
+      }
+    }
+
+    private saveTasks(){
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    }
 
     getUserTasks(userId: string){
         return this.tasks.filter((task) => task.userId === userId);
@@ -41,9 +53,11 @@ export class TasksService {
             summary: newTask.summary,
             dueDate: newTask.dueDate
         })
+        this.saveTasks();
     }
 
     removeTask(taskId: string){
         this.tasks = this.tasks.filter((task) => task.id !== taskId);
+        this.saveTasks();
     }
 }

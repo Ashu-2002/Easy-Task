@@ -1,6 +1,6 @@
 @if(newTaskTab) 
 {
-    <app-new-task (cancel)="toggleAddTaskTab()" (add)="onNewTaskSubmit($event)"></app-new-task>
+    <app-new-task [userId]="userId()" (close)="toggleAddTaskTab()"></app-new-task>
 }
 <section id="tasks">
     <header>
@@ -16,7 +16,7 @@
         @for (task of SelectedUserTasks; track task.id)
         {
             <li>
-                <app-task [task] = "task" (complete)="onCompleteTask($event)"/>
+                <app-task [task] = "task"/>
             </li>
         }
     </ul>
